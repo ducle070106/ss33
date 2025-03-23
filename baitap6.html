@@ -1,0 +1,93 @@
+<!DOCTYPE html>  
+<html lang="vi">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Ứng dụng Thời tiết</title>  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">  
+    <style>  
+        body {  
+            background-color: #f0f8ff;  
+        }  
+        .weather-card {  
+            padding: 20px;  
+            border-radius: 10px;  
+            background-color: white;  
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+            margin-top: 20px;  
+        }  
+        .error { color: red; }  
+    </style>  
+</head>  
+<body>  
+    <div class="container mt-5">  
+        <h1 class="text-center">Ứng dụng Thời tiết</h1>  
+        <div class="form-group">  
+            <input type="text" class="form-control" id="cityInput" placeholder="Nhập tên thành phố...">  
+            <button class="btn btn-primary mt-2" id="searchButton">Tìm kiếm</button>  
+        </div>  
+        <div id="weatherInfo" class="weather-card d-none">  
+            <h2 id="cityName"></h2>  
+            <div id="weatherDescription"></div>  
+            <div>  
+                <span id="icon"></span>  
+                <span id="temperature"></span> °C  
+            </div>  
+            <div id="humidity"></div>  
+            <div id="windSpeed"></div>  
+        </div>  
+        <div id="error" class="error d-none"></div>  
+    </div>  
+
+    <script>  
+        const weatherData = {  
+            "Hà Nội": {  
+                temperature: 25,  
+                humidity: 70,  
+                windSpeed: 5,  
+                description: "Có mây",  
+                icon: "☁️"  
+            },  
+            "Hồ Chí Minh": {  
+                temperature: 32,  
+                humidity: 75,  
+                windSpeed: 7,  
+                description: "Nắng",  
+                icon: "☀️"  
+            },  
+            "Đà Nẵng": {  
+                temperature: 28,  
+                humidity: 82,  
+                windSpeed: 12,  
+                description: "Mưa rào",  
+                icon: "🌧️"  
+            }  
+        };  
+
+        document.getElementById('searchButton').addEventListener('click', () => {  
+            const city = document.getElementById('cityInput').value.trim();  
+            const weatherInfo = document.getElementById('weatherInfo');  
+            const error = document.getElementById('error');  
+
+            // Reset thông tin hiển thị cũ  
+            weatherInfo.classList.add('d-none');  
+            error.classList.add('d-none');  
+
+            // Kiểm tra và hiển thị thời tiết  
+            if (weatherData[city]) {  
+                const data = weatherData[city];  
+                document.getElementById('cityName').textContent = city;  
+                document.getElementById('weatherDescription').textContent = data.description;  
+                document.getElementById('icon').textContent = data.icon;  
+                document.getElementById('temperature').textContent = data.temperature;  
+                document.getElementById('humidity').textContent = `Độ ẩm: ${data.humidity}%`;  
+                document.getElementById('windSpeed').textContent = `Tốc độ gió: ${data.windSpeed} km/h`;  
+                weatherInfo.classList.remove('d-none');  
+            } else {  
+                error.textContent = "Thành phố không tồn tại trong dữ liệu!";  
+                error.classList.remove('d-none');  
+            }  
+        });  
+    </script>  
+</body>  
+</html>  
